@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aadit Shah | Frontend Engineer</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- HERO -->
+  <section class="bg-gray-900 text-white py-20">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 id="name" class="text-5xl font-bold"></h1>
+      <p id="role" class="text-xl mt-4 text-gray-300"></p>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="max-w-4xl mx-auto py-16 px-4">
+    <h2 class="text-3xl font-bold mb-4">About Me</h2>
+    <p id="bio" class="text-lg"></p>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="bg-white py-16">
+    <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-6">Skills</h2>
+      <div id="skills" class="flex flex-wrap gap-3"></div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="max-w-4xl mx-auto py-16 px-4">
+    <h2 class="text-3xl font-bold mb-6">Experience</h2>
+    <div id="experience"></div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="bg-white py-16">
+    <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-6">Projects</h2>
+      <div id="projects" class="grid md:grid-cols-2 gap-6"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="max-w-4xl mx-auto py-16 px-4">
+    <h2 class="text-3xl font-bold mb-6">Contact</h2>
+    <p id="email"></p>
+    <p>
+      <a id="github" class="text-blue-600" target="_blank"></a>
+    </p>
+    <p>
+      <a id="linkedin" class="text-blue-600" target="_blank"></a>
+    </p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 text-white text-center py-6">
+    © 2026 Aadit Shah
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    const API_BASE = "http://127.0.0.1:5000/api";
+    // CHANGE TO RENDER URL AFTER DEPLOYMENT
+
+    // ABOUT
+    fetch(`${API_BASE}/about`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("name").innerText = data.name;
+        document.getElementById("role").innerText = data.role;
+        document.getElementById("bio").innerText = data.bio;
+      });
+
+    // SKILLS
+    fetch(`${API_BASE}/skills`)
+      .then(res => res.json())
+      .then(skills => {
+        const skillsDiv = document.getElementById("skills");
+        skills.forEach(skill => {
+          const span = document.createElement("span");
+          span.className =
+            "bg-gray-200 px-4 py-2 rounded-full text-sm font-semibold";
+          span.innerText = skill;
+          skillsDiv.appendChild(span);
+        });
+      });
+
+    // EXPERIENCE
+    fetch(`${API_BASE}/experience`)
+      .then(res => res.json())
+      .then(exp => {
+        const expDiv = document.getElementById("experience");
+        exp.forEach(e => {
+          expDiv.innerHTML += `
+            <div class="mb-6 p-6 bg-white rounded shadow">
+              <h3 class="text-xl font-bold">${e.role}</h3>
+              <p class="text-gray-600">${e.company} | ${e.duration}</p>
+              <ul class="list-disc ml-5 mt-2">
+                ${e.responsibilities.map(r => `<li>${r}</li>`).join("")}
+              </ul>
+            </div>
+          `;
+        });
+      });
+
+    // PROJECTS
+    fetch(`${API_BASE}/projects`)
+      .then(res => res.json())
+      .then(projects => {
+        const projDiv = document.getElementById("projects");
+        projects.forEach(p => {
+          projDiv.innerHTML += `
+            <div class="p-6 bg-gray-100 rounded shadow">
+              <h3 class="text-xl font-bold mb-2">${p.title}</h3>
+              <p class="mb-2">${p.description}</p>
+              <p class="text-sm text-gray-600">${p.tech.join(", ")}</p>
+            </div>
+          `;
+        });
+      });
+
+    // CONTACT
+    fetch(`${API_BASE}/contact`)
+      .then(res => res.json())
+      .then(c => {
+        document.getElementById("email").innerText = "Email: " + c.email;
+        document.getElementById("github").innerText = "GitHub";
+        document.getElementById("github").href = c.github;
+        document.getElementById("linkedin").innerText = "LinkedIn";
+        document.getElementById("linkedin").href = c.linkedin;
+      });
+  </script>
+
+</body>
+</html>
+
