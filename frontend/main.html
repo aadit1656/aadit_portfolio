@@ -2,11 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="api-base" content="http://127.0.0.1:5000/api" />
+
+  <!-- CHANGE THIS WHEN DEPLOYING -->
+  <!-- LOCAL: http://127.0.0.1:5000/api -->
+  <!-- RENDER: https://aadit-portfolio-backend.onrender.com/api -->
+  <meta name="api-base" content="https://aadit-portfolio-backend.onrender.com/api" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aadit Shah | Frontend Engineer</title>
 
-  <!-- Tailwind CDN -->
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -51,8 +56,8 @@
   <!-- CONTACT -->
   <section class="max-w-4xl mx-auto py-16 px-4">
     <h2 class="text-3xl font-bold mb-6">Contact</h2>
-    <p id="email"></p>
-    <p>
+    <p id="email" class="mb-2"></p>
+    <p class="mb-2">
       <a id="github" class="text-blue-600" target="_blank"></a>
     </p>
     <p>
@@ -65,10 +70,11 @@
     © 2026 Aadit Shah
   </footer>
 
-  <!-- SCRIPT -->
+  <!-- JAVASCRIPT -->
   <script>
-    const API_BASE = "http://127.0.0.1:5000/api";
-    // CHANGE TO RENDER URL AFTER DEPLOYMENT
+    // Get API base URL from meta tag
+    const metaApi = document.querySelector('meta[name="api-base"]');
+    const API_BASE = metaApi ? metaApi.content : "";
 
     // ABOUT
     fetch(`${API_BASE}/about`)
@@ -137,8 +143,7 @@
         document.getElementById("linkedin").innerText = "LinkedIn";
         document.getElementById("linkedin").href = c.linkedin;
       });
-  <script>
-    // Read backend URL from meta tag so it can be changed when deployed
-    const metaApi = document.querySelector('meta[name="api-base"]');
-    const API_BASE = (metaApi && metaApi.content) ? metaApi.content : "http://127.0.0.1:5000/api";
+  </script>
 
+</body>
+</html>
