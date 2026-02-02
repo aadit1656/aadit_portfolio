@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="api-base" content="http://127.0.0.1:5000/api" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aadit Shah | Frontend Engineer</title>
 
@@ -136,8 +137,8 @@
         document.getElementById("linkedin").innerText = "LinkedIn";
         document.getElementById("linkedin").href = c.linkedin;
       });
-  </script>
-
-</body>
-</html>
+  <script>
+    // Read backend URL from meta tag so it can be changed when deployed
+    const metaApi = document.querySelector('meta[name="api-base"]');
+    const API_BASE = (metaApi && metaApi.content) ? metaApi.content : "http://127.0.0.1:5000/api";
 

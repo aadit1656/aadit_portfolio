@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "aadit-portfolio",
+  "builds": [
+    { "src": "frontend/main.html", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/", "dest": "/frontend/main.html" }
+  ]
+}
